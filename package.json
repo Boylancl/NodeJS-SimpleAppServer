@@ -1,0 +1,12 @@
+{
+  "version": "0.0.0",
+  "private": true,
+  "name": "SimpleAppServer",
+  "description": "",
+  "repository": "",
+  "license": "MIT",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "node start.js"
+  }
+}
