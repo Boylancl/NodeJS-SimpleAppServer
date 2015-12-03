@@ -1,6 +1,7 @@
 const server = require('./main.js');
 
+
 module.exports = {
 
-    instance: server.serverInstance
+    Events: server.serverInstance
 };
