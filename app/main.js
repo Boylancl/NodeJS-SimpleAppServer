@@ -10,7 +10,9 @@ module.exports = {
     for(var i=0; i<onRequestStart.length; i++){
       server.instance.on('request', onRequestStart[i]);
     }
-    //Make sure
+
+
 
   }
+
 };
