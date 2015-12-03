@@ -1,5 +1,3 @@
-const http = require('http');
-const config = require('./config.js');
 var onRequestStart = require('./events/onRequestStart.js');
 var onResponseFinish = require('./events/onResponseFinish.js');
 
@@ -9,8 +7,8 @@ module.exports = {
   serverInstance:""
 
   //methods
-  ,start: function(port) {
-    this.serverInstance = http.createServer();
+  ,start: function(config) {
+    this.serverInstance = config.http.createServer();
 
     //Hook actions to process the request
     for(var i=0; i< onRequestStart.length; i++){
@@ -21,7 +19,8 @@ module.exports = {
       this.serverInstance.on('request', onResponseFinish[j]);
     }
 
-    this.serverInstance.listen(port);
+    this.serverInstance.listen(config.port, config.hostname);
+
   }
 
 }

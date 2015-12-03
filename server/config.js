@@ -1,5 +1,8 @@
+const http = require('http');
+
 
 module.exports = {
-
-  port: 8000 //default listening port
+  http: http
+  ,hostname: undefined
+  ,port: 8000 //default listening port
 }
