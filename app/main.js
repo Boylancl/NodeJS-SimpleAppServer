@@ -1,13 +1,30 @@
-var onRequestStart = require('./events/onRequestStart.js');
+var appConfig;
 
 module.exports = {
 
-  start: function(config)
+  //methods
+  Init: function(config)
   {
-    //Bind all the OnRequest Functions to the Server
-    for(var i=0; i<onRequestStart.Handlers.length; i++){
-      config.server.Events.on(onRequestStart.EventName, onRequestStart.Handlers[i]);
+    appConfig = config;
+
+    //init Event Handlers
+    for(var i=0; i<config.EventHandlers.length; i++)
+    {
+      config.EventHandlers[i].Init({
+        OutEvents: config.OutEvents
+        ,InEvents: config.Server.Events
+      });
     }
+  }
+  ,Implement: function(interfaceList){
+    //map methods/members from the configuration to the interface
+    for(var prop in interfaceList){
+      //match the prop from the interface to something in the config
+      if(prop in appConfig){
+        interfaceList[prop] = appConfig[prop];
+      }
+    }
+    return interfaceList;
   }
 
 };

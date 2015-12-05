@@ -1,5 +1,5 @@
-const appEvents = require('./emitter.js');
+const app = require('./main.js');
 
-module.exports = {
-  Events: appEvents
-};
+module.exports = app.Implement({
+    OutEvents: undefined
+});

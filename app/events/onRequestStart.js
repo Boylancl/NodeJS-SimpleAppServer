@@ -1,24 +1,32 @@
-const appEvents = require('../emitter.js');
-const routingLogic = require('../logic/routing.js');
+//Private
+//members
+const eventName = "request";
+var outEvents = undefined;
+var handlers = [
+  //basic Log
+  function(request, response){
+    console.log("App Recieved Request!");
+  }
+  //Pass the request to the Basic Controller
+  ,function(request, response){
 
+    outEvents.emit('basic', request, response);
+
+    //Send the Response to the Client
+    response.end();
+  }
+];
+
+
+//Public
 module.exports = {
-
-  EventName: "request"
-  ,Handlers: [
-    //basic Log
-    function(request, response){
-      console.log("App Recieved Request!");
+  //Methods
+  Init: function(app){
+    //Bind all the OnRequest Functions to the Server
+    for(var i=0; i<handlers.length; i++){
+      app.InEvents.on(eventName, handlers[i]);
     }
-    //Pass the request to the Basic Controller
-    ,function(request, response){
 
-      //Parse the request to determine where it goes
-      var route = routingLogic.getRoute(request);
-
-      appEvents.emit('basic', request, response);
-
-      //Send the Response to the Client
-      response.end();
-    }
-  ]
+    outEvents = app.OutEvents;
+  }
 };
