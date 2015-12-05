@@ -1,6 +1,6 @@
-const config = require('./config.js');
+const appDef = require('./definition.js');
 const app = require('./main.js');
 
-app.Init(config);
+app.Init(appDef);
 
 console.log("App Started!");

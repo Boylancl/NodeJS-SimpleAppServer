@@ -1,15 +1,13 @@
 
-const app = require('../../app/interface.js');
-var onBasicRequest = require('./events/onBasicRequest.js')
-
 module.exports = {
-
-  start: function(config)
+  //methods
+  Init: function(controllerRef)
   {
-
-    //Bind all the OnRequest Functions to the Server
-    for(var i=0; i<onBasicRequest.Handlers.length; i++){
-      app.OutEvents.on(onBasicRequest.EventName, onBasicRequest.Handlers[i]);
+    //init Event Handlers
+    for(var i=0; i<controllerRef.EventHandlers.length; i++){
+      //Hook the Event Handlers to the Server Events
+      controllerRef.ParentEvents.on(controllerRef.EventHandlers[i].EventName
+        ,controllerRef.EventHandlers[i].Handlers[i]);
     }
   }
 

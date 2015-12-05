@@ -1,5 +1,5 @@
-const app = require('./main.js');
+const app = require('./definition.js');
 
-module.exports = app.Implement({
-    OutEvents: undefined
-});
+module.exports = {
+  OutEvents: app.EventEmitter
+}
