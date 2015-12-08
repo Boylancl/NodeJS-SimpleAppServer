@@ -1,5 +1,5 @@
 const app = require('./definition.js');
 
 module.exports = {
-  OutEvents: app.EventEmitter
+  OutEvents: app.channels.out
 }

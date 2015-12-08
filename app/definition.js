@@ -1,15 +1,21 @@
-const serverInstance = require('../server/interface.js');
+const server = require('../server/interface.js');
 
 const EventEmitter = require('events');
-const appEmitter = new EventEmitter.EventEmitter();
+
+const outEmitter = new EventEmitter.EventEmitter();
 
 var onRequestStart = require('./events/onRequestStart.js');
 
 module.exports = {
-  EventHandlers: [
-    onRequestStart
-  ]
-  ,ParentEvents: serverInstance.OutEvents
-  ,EventEmitter: appEmitter
-
+  events: {
+    'request': function(request, response){
+      for(var i=0; i<onRequestStart.length; i++){
+        onRequestStart[i](outEmitter, request, response);
+      }
+    }
+  }
+  ,channels: {
+    in: server.channels.out
+    ,out: outEmitter
+  }
 };

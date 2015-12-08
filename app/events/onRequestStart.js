@@ -1,18 +1,13 @@
+module.exports = [
+  //basic Log
+  function(){
+    console.log("App Recieved Request!");
+  }
+  //Pass the request to the Basic Controller
+  ,function(outChannel, request, response){
+    outChannel.emit('basic', request, response);
 
-module.exports = {
-  EventName: "request"
-  ,OutEvents: undefined
-  ,Handlers: [
-    //basic Log
-    function(request, response){
-      console.log("App Recieved Request!");
-    }
-    //Pass the request to the Basic Controller
-    ,function(request, response){
-      this.OutEvents.emit('basic', request, response);
-
-      //Send the Response to the Client
-      response.end();
-    }
-  ]
-};
+    //Send the Response to the Client
+    response.end();
+  }
+];
