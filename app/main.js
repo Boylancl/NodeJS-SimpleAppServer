@@ -1,10 +1,9 @@
 const basicModule = require('../Common/Classes/BasicModule.js');
 
-module.exports = {
-  //methods
-  Init: function(appDef)
-  {
-    basicModule.call(appDef);
-  }
+const appDef = require('./definition.js');
+const appConfig = require('./config.json');
 
-};
+const app = new appDef(appConfig);
+console.log("App Started!");
+
+module.exports = app;

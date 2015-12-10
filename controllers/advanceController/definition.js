@@ -1,11 +1,11 @@
 
 const appInstance = require('../../app/interface.js');
 
-var onBasicRequest = require('./events/onBasicRequest.js')
+var onAdvanceRequest = require('./events/onAdvanceRequest.js')
 
 module.exports = {
   EventHandlers: [
-    onBasicRequest
+    onAdvanceRequest
   ]
   ,ParentEvents: appInstance.channels.out
 };

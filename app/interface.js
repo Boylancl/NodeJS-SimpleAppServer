@@ -1,5 +1,8 @@
-const app = require('./definition.js');
 
-module.exports = {
-  OutEvents: app.channels.out
-}
+const app = require('./main.js');
+
+
+const instance = new app(appDef, appConfig);
+console.log("App Started!");
+
+module.exports = app.interface

@@ -6,14 +6,16 @@ const outEmitter = new EventEmitter.EventEmitter();
 
 var onRequestStart = require('./events/onRequestStart.js');
 
-module.exports = {
-  events: [
+module.exports = function(config){
+  this.events = [
     new onRequestStart({
-      out: outEmitter
+      out: config.channels.out
     })
-  ]
-  ,channels: {
-    in: server.channels.out
-    ,out: outEmitter
-  }
+  ];
+  this.interface = {
+    channels: {
+      out: config.channels.out
+    }
+  };
+  this.channels = config.channels;
 };
