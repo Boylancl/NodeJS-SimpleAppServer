@@ -1,21 +1,12 @@
-const server = require('../server/interface.js');
-
-const EventEmitter = require('events');
-
-const outEmitter = new EventEmitter.EventEmitter();
-
-var onRequestStart = require('./events/onRequestStart.js');
+const basicModule = require('../Common/Classes/BasicModule.js');
 
 module.exports = function(config){
-  this.events = [
-    new onRequestStart({
-      out: config.channels.out
-    })
-  ];
+  basicModule.call(this, config); //Inherit Parent Class
+
+  //Add Overrides and new method/members
   this.interface = {
     channels: {
       out: config.channels.out
     }
   };
-  this.channels = config.channels;
 };
