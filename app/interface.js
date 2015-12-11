@@ -1,4 +1,10 @@
-
 const app = require('./main.js');
 
-module.exports = app.interface
+var definition = function(){
+  this.channels = {
+    out: app.channels.out
+  }
+};
+
+const interface = new definition();
+module.exports = interface;

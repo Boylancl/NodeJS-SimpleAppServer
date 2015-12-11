@@ -1,4 +1,5 @@
-var actions = [
+
+module.exports = [
   //basic Log
   function(){
     console.log("App Recieved Request!");
@@ -11,9 +12,3 @@ var actions = [
     response.end();
   }
 ];
-
-module.exports = function(request,response){
-  for(var i=0; i<actions.length; i++){
-    actions[i].call(this,request, Response);
-  }
-}

@@ -1,12 +1,22 @@
-const basicModule = require('../Common/Classes/BasicModule.js');
+const listenOn = require('../Common/eventMethods/listenOn.js');
+const onRequestStart = require('./events/onRequestStart.js');
 
 module.exports = function(config){
-  basicModule.call(this, config); //Inherit Parent Class
+  const app = this; //alias for this to ensure referenece in lamba funcs
 
-  //Add Overrides and new method/members
-  this.interface = {
-    channels: {
-      out: config.channels.out
-    }
+  this.channels = {
+    out: new config.eventBase()
+    ,in: config.parent.channels.out
+  }
+
+  //Define the event handlers
+  this.inBoundEvents = {
+    'request' : function(request,response){
+        for(var i=0; i<onRequestStart.length; i++){
+          onRequestStart[i].call(app, request, response);
+        }
+      }
   };
+
+  listenOn(this.inBoundEvents, this.channels.in);
 };
