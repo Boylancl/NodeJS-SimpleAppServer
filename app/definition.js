@@ -7,7 +7,7 @@ module.exports = function(config){
   this.channels = {
     out: new config.eventBase()
     ,in: config.parent.channels.out
-  }
+  };
 
   //Define the event handlers
   this.inBoundEvents = {
