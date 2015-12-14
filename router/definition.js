@@ -8,7 +8,8 @@ module.exports = function(config){
   var instance = this;
 
   this.getRoute = function(request){
-    return getRoute.call(instance, request);
+    //Get the first tier routing value
+    return getRoute(request, instance.outBoundEvents);
   }
 
   this.outBoundEvents = {
