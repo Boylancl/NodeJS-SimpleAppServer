@@ -6,7 +6,7 @@ module.exports = function(config){
     out: new config.eventBase()
     ,in: config.parent.channels.out
   };
-  
+
   this.listenOn = listenOn;
 
-}
+};

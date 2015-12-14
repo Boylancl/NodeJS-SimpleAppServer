@@ -1,6 +1,5 @@
 const http = require('http');
 
-
 module.exports = {
   http: http
   ,hostname: undefined

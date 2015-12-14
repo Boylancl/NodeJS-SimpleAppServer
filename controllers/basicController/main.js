@@ -4,4 +4,8 @@ const config = require('./config.js');
 const contrl = new definition(config);
 console.log("Basic Contrl Started!");
 
-module.exports =  contrl;
+module.exports = {
+  channels:{
+    out: contrl.channels.out
+  }
+};

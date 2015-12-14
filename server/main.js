@@ -1,26 +1,17 @@
-var onRequestStart = require('./events/onRequestStart.js');
-var onResponseFinish = require('./events/onResponseFinish.js');
+const definition = require('./definition.js');
+const config = require('./config.js');
+
+const server = new definition(config);
+console.log('Server Started!');
+
+var hostname = config.hostname;
+if(hostname == undefined){
+  hostname = 'Localhost';
+}
+console.log('Listening on %s:%s', hostname, config.port);
 
 module.exports = {
-
-  //members
-  serverInstance:""
-
-  //methods
-  ,start: function(config) {
-    this.serverInstance = config.http.createServer();
-
-    //Hook actions to process the request
-    for(var i=0; i< onRequestStart.length; i++){
-      this.serverInstance.on('request', onRequestStart[i]);
-    }
-    //Hook actions to every completed response
-    for(var j=0; j< onResponseFinish.length; j++){
-      this.serverInstance.on('request', onResponseFinish[j]);
-    }
-
-    this.serverInstance.listen(config.port, config.hostname);
-
+  channels: {
+    out :server.serverInstance
   }
-
-}
+};
