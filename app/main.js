@@ -1,8 +1,7 @@
+const definition = require('./definition.js');
+const config = require('./config.js');
 
-const appDef = require('./definition.js');
-const appConfig = require('./config.js');
-
-const app = new appDef(appConfig);
-console.log("App Started!");
+const app = new definition(config);
+console.log("app Started!");
 
 module.exports =  app;

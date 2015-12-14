@@ -1,22 +1,19 @@
-const listenOn = require('../Common/eventMethods/listenOn.js');
+const moduleDef = require('../common/class/module.js');
 const onRequestStart = require('./events/onRequestStart.js');
 
 module.exports = function(config){
-  const app = this; //alias for this to ensure referenece in lamba funcs
-
-  this.channels = {
-    out: new config.eventBase()
-    ,in: config.parent.channels.out
-  };
+  moduleDef.call(this, config);
+  
+  const instance = this; //alias for this to ensure referenece in lamba funcs
 
   //Define the event handlers
   this.inBoundEvents = {
     'request' : function(request,response){
         for(var i=0; i<onRequestStart.length; i++){
-          onRequestStart[i].call(app, request, response);
+          onRequestStart[i].call(instance, request, response);
         }
       }
   };
 
-  listenOn(this.inBoundEvents, this.channels.in);
+  this.listenOn(this.inBoundEvents, this.channels.in);
 };

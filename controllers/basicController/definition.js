@@ -1,11 +1,18 @@
+const moduleDef = require('../../common/class/module.js');
+const onBasicRequest = require('./events/onBasicRequest.js');
 
-const appInstance = require('../../app/interface.js');
+module.exports = function(config){
+  moduleDef.call(this, config);
+  const instance = this; //alias for this to ensure referenece in lamba funcs
 
-var onBasicRequest = require('./events/onBasicRequest.js')
+  //Define the event handlers
+  this.inBoundEvents = {
+    'basic' : function(request,response){
+        for(var i=0; i<onBasicRequest.length; i++){
+          onBasicRequest[i].call(instance, request, response);
+        }
+      }
+  };
 
-module.exports = {
-  EventHandlers: [
-    onBasicRequest
-  ]
-  ,ParentEvents: appInstance.channels.out
+  this.listenOn(this.inBoundEvents, this.channels.in);
 };

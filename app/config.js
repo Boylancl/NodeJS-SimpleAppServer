@@ -1,6 +1,5 @@
+const config = require('../common/config/moduleConfig.js');
 
-module.exports = {
-  eventBase: require('events')
-  ,parent: require('../server/interface.js')
+config.parent = require('../server/interface.js');
 
-}
+module.exports = config;
