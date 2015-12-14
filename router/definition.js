@@ -1,6 +1,6 @@
 const moduleDef = require('../common/class/module.js');
 const onRequest = require('./events/onRequest.js');
-const getRoute = require('./methods/getRoute.js');
+const getRoute = require('../common/methods/router/getRoute.js');
 
 module.exports = function(config){
   moduleDef.call(this, config);

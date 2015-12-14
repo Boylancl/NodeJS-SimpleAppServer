@@ -1,4 +1,4 @@
-const listenOn = require('../eventMethods/listenOn.js');
+const listenOn = require('../methods/module/listenOn.js');
 
 module.exports = function(config){
 
