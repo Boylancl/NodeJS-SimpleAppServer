@@ -10,7 +10,7 @@ module.exports = function(config){
   this.getRoute = function(request){
     //Get the first tier routing value
     return getRoute(request, instance.outBoundEvents);
-  }
+  };
 
   this.outBoundEvents = {
     'defaultApp' : function(request, response){

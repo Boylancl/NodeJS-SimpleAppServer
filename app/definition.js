@@ -6,6 +6,12 @@ module.exports = function(config){
 
   const instance = this; //alias for this to ensure referenece in lamba funcs
 
+  this.outBoundEvents = {
+    'basic' : function(request, response){
+      instance.channels.out.emit('basic', request, response);
+    }
+  };
+
   //Define the event handlers
   this.inBoundEvents = {
     'defaultApp' : function(request,response){
