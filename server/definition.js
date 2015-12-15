@@ -1,19 +1,39 @@
-
+const moduleDef = require('../common/definitions/module.js');
 var onRequestStart = require('./events/onRequestStart.js');
-var onResponseFinish = require('./events/onResponseFinish.js');
 
 module.exports = function(config){
-  this.serverInstance = config.http.createServer();
+  moduleDef.call(this, config);
 
-  //Hook actions to process the request
-  for(var i=0; i< onRequestStart.length; i++){
-    this.serverInstance.on('request', onRequestStart[i]);
-  }
-  //Hook actions to every completed response
-  for(var j=0; j< onResponseFinish.length; j++){
-    this.serverInstance.on('request', onResponseFinish[j]);
-  }
+  //Set variables and members
+  this.server = config.server;
+  var instance = this;
 
-  this.serverInstance.listen(config.port, config.hostname);
+  //Set the in/out Event Handlers
+  this.outBoundEvents = {
+    'default' : function(request, response){
+      instance.channels.out.emit('defaultApp', request, response);
+    }
+  };
+
+  this.inBoundEvents = {
+    'request' : function(request, response){
+      //Hook act ions to process the request
+      for(var i=0; i< onRequestStart.length; i++){
+        onRequestStart[i].call(instance, request, response);
+      }
+    }
+  };
+  
+  //Hook in Events to the in channel
+  this.listenOn(this.inBoundEvents, this.channels.in);
+
+  //Override module methods
+  this.getRoute = function(){
+    //Pull the default only (to be changed)
+    return this.outBoundEvents['default'];
+  };
+
+  //Start Server
+  this.server.listen(config.port, config.hostname);
 
 };

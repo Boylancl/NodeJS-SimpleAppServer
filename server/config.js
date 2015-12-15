@@ -1,7 +1,13 @@
 const http = require('http');
+var config = require('../common/config/moduleConfig.js');
 
-module.exports = {
-  http: http
-  ,hostname: undefined
-  ,port: 8000 //default listening port
+config.server = http.createServer();
+config.hostname = undefined;
+config.port = 8000;
+config.parent = {
+  channels: {
+    out: config.server
+  }
 }
+
+module.exports = config;

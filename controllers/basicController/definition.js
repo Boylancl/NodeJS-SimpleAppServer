@@ -1,5 +1,6 @@
-const moduleDef = require('../../common/class/module.js');
+const moduleDef = require('../../common/definitions/module.js');
 const onBasicRequest = require('./events/onBasicRequest.js');
+
 
 module.exports = function(config){
   moduleDef.call(this, config);

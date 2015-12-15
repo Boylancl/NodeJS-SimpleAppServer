@@ -1,4 +1,4 @@
-const moduleDef = require('../common/class/module.js');
+const moduleDef = require('../common/definitions/module.js');
 const onRequestStart = require('./events/onRequestStart.js');
 
 module.exports = function(config){

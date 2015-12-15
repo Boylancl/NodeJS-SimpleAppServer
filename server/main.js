@@ -12,6 +12,6 @@ console.log('Listening on %s:%s', hostname, config.port);
 
 module.exports = {
   channels: {
-    out :server.serverInstance
+    out : server.channels.out
   }
 };
