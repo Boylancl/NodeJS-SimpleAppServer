@@ -12,10 +12,11 @@ module.exports = function(config){
 
   this.listenOn = listenOn;
 
-  //Routing Method to process requests 
+  //Routing Method to process requests
   this.getRoute = function(request){
     //Get the first tier routing value
-    var routingMethod = getRoute(request, this.outBoundEvents, this.routingTier);
+    var routingMethod = getRoute(request
+      ,this.outBoundEvents, this.routingTier);
 
     if(routingMethod == undefined || routingMethod == null){
       routingMethod = this.outBoundEvents['default'];
