@@ -7,7 +7,7 @@ module.exports = function(config){
 
   //Define the event handlers
   this.inBoundEvents = {
-    'basic' : function(request,response){
+    'defaultController' : function(request,response){
         for(var i=0; i<onBasicRequest.length; i++){
           onBasicRequest[i].call(instance, request, response);
         }

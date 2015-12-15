@@ -4,11 +4,13 @@ const onRequestStart = require('./events/onRequestStart.js');
 module.exports = function(config){
   moduleDef.call(this, config);
 
+  this.routingTier = 1;
+
   const instance = this; //alias for this to ensure referenece in lamba funcs
 
   this.outBoundEvents = {
-    'basic' : function(request, response){
-      instance.channels.out.emit('basic', request, response);
+    'default' : function(request, response){
+      instance.channels.out.emit('defaultController', request, response);
     }
   };
 
