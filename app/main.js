@@ -4,4 +4,8 @@ const config = require('./config.js');
 const app = new definition(config);
 console.log("app Started!");
 
-module.exports =  app;
+module.exports =  {
+  channels: {
+    out: app.channels.out
+  }
+};

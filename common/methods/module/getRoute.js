@@ -1,6 +1,6 @@
 const urlHelp = require('url');
 
-module.exports = function(request, routeDict, tier){
+module.exports = function(request, routeTable, tier){
   if(tier == undefined || tier == null){
     tier = 0; //default
   }
@@ -17,8 +17,8 @@ module.exports = function(request, routeDict, tier){
     if(route[i] != '' && route[i] != undefined){
       var routeId = route[i];
 
-      if(routeId in routeDict){
-        routeValue = routeDict[routeId];
+      if(routeId in routeTable){
+        routeValue = routeTable[routeId];
       }else {
         console.log('Warning! No Route found for %s', routeId);
       }

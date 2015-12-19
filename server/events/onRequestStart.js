@@ -17,10 +17,13 @@ module.exports = [
       ,response.statusCode);
     });
   }
+  //Log that the request was Recieved
+  ,function(){
+    console.log('Server Recieved Request!');
+  }
   //Process the request
   ,function(request, response){
-    console.log('Server Recieved Request!');
-    var route = this.getRoute();
+    var route = this.getRoute(request);
 
     route(request, response);
   }

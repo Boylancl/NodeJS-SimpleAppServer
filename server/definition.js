@@ -8,30 +8,18 @@ module.exports = function(config){
   this.server = config.server;
   var instance = this;
 
-  //Set the in/out Event Handlers
-  this.outBoundEvents = {
-    'default' : function(request, response){
-      instance.channels.out.emit('defaultApp', request, response);
-    }
-  };
-
-  this.inBoundEvents = {
+  //override Routing info
+  this.routes.in = {
     'request' : function(request, response){
-      //Hook act ions to process the request
+      //Hook actions to process the request
       for(var i=0; i< onRequestStart.length; i++){
         onRequestStart[i].call(instance, request, response);
       }
     }
   };
-  
-  //Hook in Events to the in channel
-  this.listenOn(this.inBoundEvents, this.channels.in);
 
-  //Override module methods
-  this.getRoute = function(){
-    //Pull the default only (to be changed)
-    return this.outBoundEvents['default'];
-  };
+  //Hook the in route to the in channel
+  this.listenOn(this.routes.in, this.channels.in);
 
   //Start Server
   this.server.listen(config.port, config.hostname);
