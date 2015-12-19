@@ -1,43 +1,54 @@
-const listenOn = require('../methods/module/listenOn.js');
+
 const getRoute = require('../methods/module/getRoute.js');
 
 module.exports = function(config){
+  //Members
   this.name = config.name;
+  this.tier = config.tier;
+
+  //Methods
+  this.listenOn = require('../methods/module/listenOn.js');
 
   this.channels = {
     out: new config.eventBase()
     ,in: config.parent.channels.out
   };
 
-  this.tier = config.tier;
 
-  const instance = this;
+  //Process the Configured Routes
+  for(var i=0; i<config.routes.length; i++){
+    var route = config.routes[i];
 
-
-  this.routes =
-  {
-    'NotFound': function(request, response){
-        instance.channels.out.emit('NotFound', request, response);
-    }
-    ,'request': function(request,response){
-        console.log('Request caught in Name/Tier : %s/%s'
-          ,instance.name, instance.routes.tier);
+    //Build a complete flatted list of all actions
+    var routeActions = [];
+    if(Array.isArray(route.actions)){
+      for(var j=0; j<route.actions.length; j++){
+        routeActions.concat(route.actions[j](this));
       }
-  }
+    }
+    else{
+      routeActions = route.actions(this);
+    }
 
-  this.listenOn = listenOn;
+    //Attach the actions to the event channel
+    if(route.listenOn != undefined ||
+    route.listenOn != null){
+      for(var j=0; j<routeActions.length; j++){
+        this.listenOn(route.eventName, route.listenOn, routeActions[j]);
+      }
+    }
+    else{
+      for(var j=0; j<routeActions.length; j++){
+        this.listenOn(route.eventName, this.channels.out, routeActions[j]);
+      }
+    }
+  }
 
   //Routing Method to process requests
   this.getRoute = function(request){
     //Get the first tier routing value
-    var routingMethod = getRoute(request
-      ,this.routes, this.tier);
+    return getRoute(request, this.tier);
 
-    if(routingMethod == undefined || routingMethod == null){
-      routingMethod = this.routes['NotFound'];
-    }
-
-    return routingMethod;
   };
 
 };

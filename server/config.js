@@ -8,7 +8,7 @@ config.parent = createHttpServer(undefined, 8000);
 config.routes = [
     {
       name: 'request'
-      actions: onRequestStart
+      ,actions: onRequestStart
       ,listenOn: config.parent.channels.out
     }
 ];

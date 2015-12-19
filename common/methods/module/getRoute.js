@@ -1,11 +1,11 @@
 const urlHelp = require('url');
 
-module.exports = function(request, routeTable, tier){
+module.exports = function(request, tier){
   if(tier == undefined || tier == null){
     tier = 0; //default
   }
 
-  var routeValue;
+  var routeValue = 'NotFound';
 
   var url = urlHelp.parse(request.url);
 
@@ -15,13 +15,7 @@ module.exports = function(request, routeTable, tier){
   //Assume the first value in the route will be ''
   for(var i=tier+1; i<route.length; i++){
     if(route[i] != '' && route[i] != undefined){
-      var routeId = route[i];
-
-      if(routeId in routeTable){
-        routeValue = routeTable[routeId];
-      }else {
-        console.log('Warning! No Route found for %s', routeId);
-      }
+      routeValue = route[i];
       break; //Stop after the first non-empty value
     }
   }
