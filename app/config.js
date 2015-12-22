@@ -1,7 +1,18 @@
 const config = require('../common/config/moduleConfig.js');
+const onRequestStart = require('./events/onRequestStart.js');
 
-config.parent = require('../server/main.js');
+module.exports = function(){
+  config.call(this); //inherit
 
-config.tier = 0;
+  this.parent = require('../server/main.js');
+  this.name = "defaultApp";
 
-module.exports = config;
+  this.tier = 1;
+  this.routes = this.routes.concat([
+      {
+        name: this.name
+        ,actions: onRequestStart
+        ,listenOn: this.parent.channels.out
+      }
+  ]);
+};

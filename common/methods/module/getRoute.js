@@ -1,11 +1,11 @@
 const urlHelp = require('url');
 
-module.exports = function(request, tier){
+module.exports = function(request, channel, tier){
   if(tier == undefined || tier == null){
     tier = 0; //default
   }
 
-  var routeValue = 'NotFound';
+  var routeValue = 'notFound';
 
   var url = urlHelp.parse(request.url);
 
@@ -18,6 +18,12 @@ module.exports = function(request, tier){
       routeValue = route[i];
       break; //Stop after the first non-empty value
     }
+  }
+  console.log(channel.listeners(routeValue).length);
+
+
+  if(channel.listeners(routeValue).length < 1){
+    routeValue = 'notFound';
   }
 
   return routeValue;

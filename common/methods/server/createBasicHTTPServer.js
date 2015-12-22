@@ -5,7 +5,6 @@ module.exports = function(hostname, port){
   var server = http.createServer();
   server.listen(port, hostname);
 
-  var hostname = config.hostname;
   if(hostname == undefined){
     hostname = 'Localhost';
   }

@@ -1,4 +1,6 @@
 
+const routeHttpRequest = require('../../common/methods/server/routeHTTPRequest.js')
+
 module.exports = function(instance){
 return [
     //Basic Request Logging
@@ -19,13 +21,11 @@ return [
     }
     //Log that the request was Recieved
     ,function(){
-      console.log('Server Recieved Request!');
+      console.log('%s Recieved Request!', instance.name);
     }
     //Process the request
     ,function(request, response){
-      var route = instance.getRoute(request);
-
-      route(request, response);
+      routeHttpRequest(instance, request, response);
     }
   ];
 }

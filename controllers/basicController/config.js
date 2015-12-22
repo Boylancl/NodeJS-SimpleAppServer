@@ -1,7 +1,20 @@
 const config = require('../../common/config/moduleConfig.js');
+const onBasicRequest = require('./events/onBasicRequest.js');
 
-config.parent = require('../../app/main.js');
+module.exports = function(){
+  config.call(this); //inherit
 
-config.tier = 1;
+  this.name = "basicCntrlr";
 
-module.exports = config;
+  this.parent = require('../../app/main.js');
+
+  this.tier = 2;
+  this.routes = this.routes.concat([
+      {
+        name: this.name
+        ,actions: onBasicRequest
+        ,listenOn: this.parent.channels.out
+      }
+  ]);
+
+};
