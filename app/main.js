@@ -2,7 +2,7 @@ const definition = require('./definition.js');
 const config = require('./config.js');
 
 const app = new definition(new config());
-console.log("app Started!");
+console.log("%s Started!", app.name);
 
 module.exports =  {
   channels: {

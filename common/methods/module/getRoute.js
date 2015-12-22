@@ -19,8 +19,6 @@ module.exports = function(request, channel, tier){
       break; //Stop after the first non-empty value
     }
   }
-  console.log(channel.listeners(routeValue).length);
-
 
   if(channel.listeners(routeValue).length < 1){
     routeValue = 'notFound';

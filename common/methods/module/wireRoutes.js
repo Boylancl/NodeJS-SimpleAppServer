@@ -6,8 +6,7 @@ module.exports = function(instance, routes, channels, listenOn)
   //Process the Configured Routes
   for(var i=0; i<routes.length; i++){
     var route = routes[i];
-    console.log(route.name);
-
+    
     //Build a complete flatted list of all actions
     var routeActions = [];
     if(Array.isArray(route.actions)){
