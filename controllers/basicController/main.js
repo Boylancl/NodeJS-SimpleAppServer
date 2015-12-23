@@ -1,11 +1,28 @@
 const definition = require('./definition.js');
-const config = require('./config.js');
+const defaultConfig = require('./config.js');
+const createNewModule = require('../../common/methods/module/createNewModule.js');
 
-const contrl = new definition(new config());
-console.log("%s Started!", contrl.name);
+var instance;
 
-module.exports = {
-  channels:{
-    out: contrl.channels.out
+module.exports = function(config){
+
+  if(config == undefined ||
+  config == null){
+    config = defaultConfig;
   }
+
+  if(instance == undefined ||
+  instance == null){
+    instance = createNewModule(definition, config);
+  }
+  else {
+    console.log("%s is already started!", instance.name);
+  }
+
+  return {
+    channels:{
+      out: instance.channels.out
+    }
+  };
+
 };
