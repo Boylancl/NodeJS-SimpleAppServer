@@ -1,15 +1,9 @@
 module.exports = function(config){
-  if(config == undefined ||
-  config == null){
-    config = defaultConfig;
-  }
+  for(key in config){
+      var def = config[key].definition;
+      var config = config[key].configuration;
 
-  if(instance == undefined ||
-  instance == null){
-    instance = createNewModule(definition, config);
+      var module = new def(config);
+      module.name = key;
   }
-  else {
-    console.log("%s is already started!", instance.name);
-  }
-
 }
