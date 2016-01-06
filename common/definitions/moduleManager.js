@@ -1,9 +1,19 @@
-module.exports = function(config){
-  for(key in config){
-      var def = config[key].definition;
-      var config = config[key].configuration;
+const createNewModule = require('../methods/module/createNewModule.js');
 
-      var module = new def(config);
-      module.name = key;
+module.exports = function(config){
+  this.modules = {};
+  this.createNewModule = createNewModule;
+
+  for(key in config){
+    var module = this.createNewModule(config[key].definition
+      ,config[key].configuration);
+
+    module.name = key;
+
+    this.modules.push({
+      module.name
+      ,module
+    });
   }
+
 }

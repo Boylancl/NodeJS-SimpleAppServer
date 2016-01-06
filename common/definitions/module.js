@@ -8,10 +8,7 @@ module.exports = function(config){
   this.name = config.name;
   this.tier = config.tier;
 
-  this.channels = {
-    out: new config.eventBase()
-    ,in: config.parent.channels.out
-  };
+  this.channels = config.channels;
 
   wireRoutes(this, config.routes, this.channels, listenOn);
 

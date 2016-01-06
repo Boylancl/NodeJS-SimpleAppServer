@@ -4,15 +4,18 @@ const onRequestStart = require('./events/onRequestStart.js');
 module.exports = function(){
   config.call(this); //inherit
 
-  this.parent = require('../server/main.js');
+  this.channels = this.channels.concat({
+    'WebRequest': undefined
+  });
+
   this.name = "defaultApp";
 
   this.tier = 1;
   this.routes = this.routes.concat([
       {
-        name: this.name
+        name: 'ProcessRequest'
         ,actions: onRequestStart
-        ,listenOn: this.parent.channels.out
+        ,listenOn: 'WebRequest'
       }
   ]);
 };
