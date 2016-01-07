@@ -24,8 +24,9 @@ module.exports = function(instance, routes, channels, listenOn)
         ,routeActions);
     }
     else{
+      //Defaults to the INFO channel of the module
       listenOn(route.name
-        ,channels['out']
+        ,channels.info
         ,routeActions);
     }
   }

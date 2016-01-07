@@ -9,6 +9,11 @@ module.exports = function(config){
   this.tier = config.tier;
 
   this.channels = config.channels;
+  //Add the module Default channels
+  this.channels.out = new config.eventBase();
+  this.channels.error = new config.eventBase();
+  this.channels.warning = new config.eventBase();
+  this.channels.info = new config.eventBase();
 
   wireRoutes(this, config.routes, this.channels, listenOn);
 
