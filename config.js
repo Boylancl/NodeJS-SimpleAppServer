@@ -3,9 +3,10 @@
     definition: require('./controllers/basicController/definition.js')
     ,configuration: require('./controllers/basicController/config.js')
     ,routes: {
-      'http': {
+      'httpRequest': {
         connectTo: "defaultApp"
         ,listenOn: "out"
+        ,listenFor: "controller"
         ,routeTo: "getHttpResponse"
       }
     }
@@ -15,9 +16,10 @@
     definition: require('./app/definition.js')
     ,configuration: require('./app/config.js')
     ,routes: {
-      'http': {
+      'httpRequest': {
         connectTo: "defaultServer"
         ,listenOn: "out"
+        ,listenFor: "app"
         ,routeTo: "getHttpResponse"
       }
     }
