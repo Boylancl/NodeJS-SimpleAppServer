@@ -5,7 +5,7 @@ module.exports = function(request, channel, tier){
     tier = 0; //default
   }
 
-  var routeValue = 'notFound';
+  var routeValue = null;
 
   var url = urlHelp.parse(request.url);
 
@@ -21,7 +21,7 @@ module.exports = function(request, channel, tier){
   }
 
   if(channel.listeners(routeValue).length < 1){
-    routeValue = 'notFound';
+    return undefined;
   }
 
   return routeValue;
