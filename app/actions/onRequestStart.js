@@ -1,4 +1,4 @@
-const routeHttpRequest = require('../../common/methods/server/routeHTTPRequest.js')
+const routeHttpRequest = require('../../common/methods/server/routeHTTPRequest.js');
 
 module.exports = function(moduleScope){
   return [
@@ -7,12 +7,12 @@ module.exports = function(moduleScope){
       console.log("%s Recieved Request!", moduleScope.name);
     }
     //Pass the request to the Basic Controller
-    ,function(request, response){
+    ,function(inBuffer){
 
-      routeHttpRequest(moduleScope, request, response);
+      routeHttpRequest(moduleScope, inBuffer.request, inBuffer.response);
 
       //Send the Response to the Client
-      response.end();
+      inBuffer.response.end();
     }
   ];
 }

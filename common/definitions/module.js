@@ -5,13 +5,14 @@ const listenOn = require('../methods/module/listenOn.js');
 
 const eventBase = require('events').EventEmitter;
 
-module.exports = function(config){
+module.exports = function(initScope){
   //Members
-  this.name = config.name;
+  this.name = initScope.name;
 
   //Create basic channels
   this.channels = {
     'out': new eventBase()
+    ,'in': new eventBase()
     ,'notifications': new eventBase()
   };
 
@@ -23,9 +24,16 @@ module.exports = function(config){
     }
     else{
       //wire the actions to the proper channel
-      listenOn(eventName, this.channel[channelName], actions);
+      listenOn(eventName, this.channels[channelName], actions);
     }
+  }
 
+  this.buildTransmitter = function(instance, listenFor, channel){
+    return function()
+    {
+      var module = this;
+      instance.channels[channel].emit(listenFor, module.outBuffer);
+    }
   }
 
   //Routing Method to process requests

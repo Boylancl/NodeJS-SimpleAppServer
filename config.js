@@ -1,33 +1,46 @@
-{
+module.exports = {
   "basicCntrlr": {
-    definition: require('./controllers/basicController/definition.js')
-    ,configuration: require('./controllers/basicController/config.js')
-    ,routes: {
-      'httpRequest': {
-        connectTo: "defaultApp"
-        ,listenOn: "out"
-        ,listenFor: "controller"
-        ,routeTo: "getHttpResponse"
+    configuration: {
+      'name':"basicCntrlr"
+      ,'actions' : {
+        'getHttpResponse' : require('./controllers/basicController/actions/onBasicRequest.js')
       }
     }
-    ,tier: 2
+    ,routes: {
+      'getHttpResponse': {
+        connectTo: "defaultApp"
+        ,listenFor: "controller"
+      }
+    }
   }
   ,"defaultApp": {
-    definition: require('./app/definition.js')
-    ,configuration: require('./app/config.js')
-    ,routes: {
-      'httpRequest': {
-        connectTo: "defaultServer"
-        ,listenOn: "out"
-        ,listenFor: "app"
-        ,routeTo: "getHttpResponse"
+    configuration: {
+      'name':"defaultApp"
+      ,'actions' : {
+        'getHttpResponse' : require('./app/actions/onRequestStart.js')
       }
     }
-    ,tier: 1
+    ,routes: {
+      'getHttpResponse': {
+        connectTo: "defaultServer"
+        ,listenFor: "app"
+      }
+    }
   }
   ,"defaultServer": {
     definition: require('./server/definition.js')
-    ,configuration: require('./server/config.js')
-    ,tier: 0
+    ,configuration: {
+      'name':"defaultServer"
+      ,'hostname' : undefined
+      ,'port' : 8000
+      ,'actions' : {
+        'getHttpResponse' : require('./server/actions/onRequestStart.js')
+      }
+    }
+    ,routes: {
+      'getHttpResponse': {
+        listenFor: "request"
+      }
+    }
   }
 };

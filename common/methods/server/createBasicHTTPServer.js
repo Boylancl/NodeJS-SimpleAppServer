@@ -10,9 +10,5 @@ module.exports = function(hostname, port){
   }
   console.log('Listening on %s:%s', hostname, port);
 
-  return {
-    channels: {
-      out: server
-    }
-  }
+  return server;
 }

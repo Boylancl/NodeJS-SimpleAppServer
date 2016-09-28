@@ -1,33 +1,42 @@
 
-module.exports = function(instance, routes, channels, listenOn)
+module.exports = function(instances, routes, actions, instanceName)
 {
-  //Process the Configured Routes
-  for(var i=0; i<routes.length; i++){
-    var route = routes[i];
+  var instance = instances[instanceName];
 
-    //Build a complete flatted list of all actions
-    var routeActions = [];
-    if(Array.isArray(route.actions)){
-      for(var j=0; j<route.actions.length; j++){
-        routeActions.concat(route.actions[j](instance));
+  for(var key in routes){
+
+    if(routes.hasOwnProperty(key)
+      && key in actions)
+    {
+      var route = routes[key];
+      var action = actions[key];
+
+      //Build a complete flatted list of all actions
+      var routeActions = [];
+      if(Array.isArray(action)){
+        for(var j=0; j<action.length; j++){
+          //Set Scope for the actions; Add to the list
+          routeActions.concat(action[j](instance));
+        }
       }
-    }
-    else{
-      routeActions = route.actions(instance);
-    }
+      else{
+        routeActions = action(instance);
+      }
 
-    //Attach the actions to the event channel
-    if(route.listenOn != undefined ||
-    route.listenOn != null){
-      listenOn(route.name
-        ,channels[route.listenOn]
-        ,routeActions);
-    }
-    else{
-      //Defaults to the INFO channel of the module
-      listenOn(route.name
-        ,channels.info
-        ,routeActions);
+      //Setup the instance with the correct actions
+      instance.listenOn(route.listenFor, "in", routeActions);
+
+      if(route.connectTo != null
+      && route.connectTo != undefined)
+      {
+        //Route to externally
+        var parent = instances[route.connectTo];
+
+        //Set the parent with the correct route
+        parent.listenOn(route.listenFor, "out", parent.buildTransmitter(instance, route.listenFor, "in"));
+      }
+
     }
   }
+
 }
