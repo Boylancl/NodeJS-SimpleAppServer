@@ -1,8 +1,7 @@
 module.exports = {
   "basicCntrlr": {
     configuration: {
-      'name':"basicCntrlr"
-      ,'actions' : {
+      'actions' : {
         'getHttpResponse' : require('./controllers/basicController/actions/onBasicRequest.js')
       }
     }
@@ -15,8 +14,7 @@ module.exports = {
   }
   ,"defaultApp": {
     configuration: {
-      'name':"defaultApp"
-      ,'actions' : {
+      'actions' : {
         'getHttpResponse' : require('./app/actions/onRequestStart.js')
       }
     }
@@ -30,8 +28,7 @@ module.exports = {
   ,"defaultServer": {
     definition: require('./server/definition.js')
     ,configuration: {
-      'name':"defaultServer"
-      ,'hostname' : undefined
+      'hostname' : undefined
       ,'port' : 8000
       ,'actions' : {
         'getHttpResponse' : require('./server/actions/onRequestStart.js')

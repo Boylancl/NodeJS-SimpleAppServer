@@ -19,6 +19,8 @@ for(var key in config){
     var instance = createNewModule(def, curConfig.configuration);
     instance.name = key;
 
+    console.log("%s Started!", instance.name);
+
     instances[key] = instance;
     routes.push({'name': key
     ,'route': curConfig.routes

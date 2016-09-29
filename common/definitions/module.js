@@ -5,10 +5,7 @@ const listenOn = require('../methods/module/listenOn.js');
 
 const eventBase = require('events').EventEmitter;
 
-module.exports = function(initScope){
-  //Members
-  this.name = initScope.name;
-
+module.exports = function(initSetttings){
   //Create basic channels
   this.channels = {
     'out': new eventBase()
