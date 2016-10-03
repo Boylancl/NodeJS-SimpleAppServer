@@ -6,6 +6,9 @@ const listenOn = require('../methods/module/listenOn.js');
 const eventBase = require('events').EventEmitter;
 
 module.exports = function(initSetttings){
+  //Create a buffer for outgoing objects
+  this.outBuffer = {};
+
   //Create basic channels
   this.channels = {
     'out': new eventBase()
@@ -30,6 +33,7 @@ module.exports = function(initSetttings){
     {
       var module = this;
       instance.channels[channel].emit(listenFor, module.outBuffer);
+      console.log("Fired %s at %s", listenFor, instance.name);
     }
   }
 
@@ -37,6 +41,14 @@ module.exports = function(initSetttings){
   this.getRoute = function(request, channel){
     //Get the first tier routing value
     return getRoute(request, channel, this.tier);
-  };
+  }
+
+  this.out = function(request){
+    this.outBuffer = request;
+
+    console.log('%s on %s', request.route, this);
+
+    this.channels.out.emit(request.route);
+  }
 
 };

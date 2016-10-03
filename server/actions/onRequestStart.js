@@ -1,5 +1,6 @@
 
-const routeHttpRequest = require('../../common/methods/server/routeHTTPRequest.js')
+const routeHttpRequest = require('../../common/methods/server/routeHTTPRequest.js');
+const parseURL = require('../../common/methods/server/parseURL.js');
 
 module.exports = function(instance){
 return [
@@ -25,7 +26,30 @@ return [
     }
     //Process the request
     ,function(request, response){
-      routeHttpRequest(instance, request, response);
+      var path = parseURL(request.url);
+
+      var service = {};
+
+      for(var i=0; i<path.length; i++){
+        if(path[i] != null && path[i] != undefined
+        && path[i] != ''){
+          if(service.app == undefined){
+            service.app = path[i];
+          }
+          else if(service.operation == undefined){
+            service.operation = path[i];
+          }
+        }
+      }
+
+      var outObjects = {
+        route: service.app
+        ,request: request
+        ,response: response
+        ,service: service
+      };
+
+      instance.out(outObjects);
     }
   ];
 }

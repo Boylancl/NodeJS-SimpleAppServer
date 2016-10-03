@@ -33,7 +33,8 @@ module.exports = function(instances, routes, actions, instanceName)
         var parent = instances[route.connectTo];
 
         //Set the parent with the correct route
-        parent.listenOn(route.listenFor, "out", parent.buildTransmitter(instance, route.listenFor, "in"));
+        parent.listenOn(route.listenFor, "out",
+          parent.buildTransmitter(instance, route.listenFor, "in"));
       }
 
     }

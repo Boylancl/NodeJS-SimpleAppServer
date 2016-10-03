@@ -1,10 +1,6 @@
 const urlHelp = require('url');
 
 module.exports = function(request, channel, tier){
-  if(tier == undefined || tier == null){
-    tier = 0; //default
-  }
-
   var routeValue = null;
 
   var url = urlHelp.parse(request.url);
