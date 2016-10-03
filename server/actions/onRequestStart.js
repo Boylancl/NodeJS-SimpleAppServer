@@ -43,7 +43,7 @@ return [
       }
 
       var outObjects = {
-        route: service.app
+        signal: service.app
         ,request: request
         ,response: response
         ,service: service

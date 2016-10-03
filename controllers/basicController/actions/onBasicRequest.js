@@ -1,11 +1,16 @@
 
-module.exports = function(instance){
+module.exports = function(scope){
   return [
     function(){
-      console.log('%s Recieved Request!!!', instance.name);
+      console.log('%s Recieved Request!!!', scope.name);
     }
-    ,function(request, response){
-      response.write('Hello World!!');
+    ,function(data){
+      data.response.write('Hello World!!');
+    }
+    ,function(data){
+      data.signal = "end";
+      
+      scope.out(data);
     }
   ];
 }

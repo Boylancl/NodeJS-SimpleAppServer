@@ -2,6 +2,7 @@
 const getRoute = require('../methods/module/getRoute.js');
 const wireRoutes = require('../methods/module/wireRoutes.js');
 const listenOn = require('../methods/module/listenOn.js');
+const util = require('util');
 
 const eventBase = require('events').EventEmitter;
 
@@ -28,12 +29,13 @@ module.exports = function(initSetttings){
     }
   }
 
-  this.buildTransmitter = function(instance, listenFor, channel){
+  this.buildTransmitter = function(instance, signal, channel){
+    var module = this;
     return function()
     {
-      var module = this;
-      instance.channels[channel].emit(listenFor, module.outBuffer);
-      console.log("Fired %s at %s", listenFor, instance.name);
+      console.log("Fired %s at %s from %s.", signal, instance.name, module.name);
+      instance.channels[channel].emit(signal, module.outBuffer);
+
     }
   }
 
@@ -43,12 +45,12 @@ module.exports = function(initSetttings){
     return getRoute(request, channel, this.tier);
   }
 
-  this.out = function(request){
-    this.outBuffer = request;
+  this.out = function(data){
+    this.outBuffer = data;
 
-    console.log('%s on %s', request.route, this);
+    console.log('%s on %s', data.signal, this.name);
 
-    this.channels.out.emit(request.route);
+    this.channels.out.emit(data.signal);
   }
 
 };

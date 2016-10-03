@@ -1,18 +1,20 @@
-const routeHttpRequest = require('../../common/methods/server/routeHTTPRequest.js');
 
-module.exports = function(moduleScope){
+module.exports = function(scope){
   return [
     //basic Log
     function(){
-      console.log("%s Recieved Request!", moduleScope.name);
+      console.log("%s Recieved Request!", scope.name);
     }
     //Pass the request to the Basic Controller
-    ,function(inBuffer){
+    ,function(data){
 
-      routeHttpRequest(moduleScope, inBuffer.request, inBuffer.response);
+      var outObject = {
+        signal: data.service.operation
+        ,payload: data.request
+        ,response: data.response
+      };
 
-      //Send the Response to the Client
-      inBuffer.response.end();
+      scope.out(outObject);
     }
   ];
 }

@@ -15,13 +15,18 @@ module.exports = {
   ,"defaultApp": {
     configuration: {
       'actions' : {
-        'getHttpResponse' : require('./app/actions/onRequestStart.js')
+        'getHttpResponse': require('./app/actions/onRequestStart.js')
+        ,'endResponse': require('./app/actions/onEndResponse.js')
       }
     }
     ,routes: {
       'getHttpResponse': {
         connectTo: "defaultServer"
         ,listenFor: "app"
+      }
+      ,'endResponse': {
+        connectTo: "basicCntrlr"
+        ,listenFor: "end"
       }
     }
   }
