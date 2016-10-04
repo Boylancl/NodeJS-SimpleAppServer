@@ -42,14 +42,14 @@ return [
         }
       }
 
-      var outObjects = {
+      var data = {
         signal: service.app
         ,request: request
         ,response: response
         ,service: service
       };
 
-      instance.out(outObjects);
+      instance.out(data);
     }
   ];
 }

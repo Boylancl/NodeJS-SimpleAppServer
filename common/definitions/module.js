@@ -1,14 +1,10 @@
 
-const getRoute = require('../methods/module/getRoute.js');
-const wireRoutes = require('../methods/module/wireRoutes.js');
 const listenOn = require('../methods/module/listenOn.js');
-const util = require('util');
+const isSignalInChannel = require('../methods/module/isSignalInChannel.js');
 
 const eventBase = require('events').EventEmitter;
 
 module.exports = function(initSetttings){
-  //Create a buffer for outgoing objects
-  this.outBuffer = {};
 
   //Create basic channels
   this.channels = {
@@ -34,23 +30,21 @@ module.exports = function(initSetttings){
     return function()
     {
       console.log("Fired %s at %s from %s.", signal, instance.name, module.name);
+
       instance.channels[channel].emit(signal, module.outBuffer);
-
     }
-  }
-
-  //Routing Method to process requests
-  this.getRoute = function(request, channel){
-    //Get the first tier routing value
-    return getRoute(request, channel, this.tier);
   }
 
   this.out = function(data){
     this.outBuffer = data;
-
     console.log('%s on %s', data.signal, this.name);
 
-    this.channels.out.emit(data.signal);
+    if(isSignalInChannel(this, 'out', data.signal)){
+      this.channels.out.emit(data.signal);
+    }
+    else {
+      this.channels.out.emit('error', new Error('Not Found'));
+    }
   }
 
 };
