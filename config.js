@@ -12,6 +12,7 @@ module.exports = {
       }
     }
   }
+
   ,"defaultApp": {
     configuration: {
       'actions' : {
@@ -31,6 +32,7 @@ module.exports = {
       }
     }
   }
+  
   ,"defaultServer": {
     definition: require('./server/definition.js')
     ,configuration: {
