@@ -12,13 +12,11 @@ module.exports = {
       }
     }
   }
-
   ,"defaultApp": {
     configuration: {
       'actions' : {
         'getHttpResponse': require('./app/actions/onRequestStart.js')
         ,'endResponse': require('./app/actions/onEndResponse.js')
-        ,'validateResult': require('./app/actions/onValidateResult.js')
       }
     }
     ,routes: {
@@ -30,9 +28,9 @@ module.exports = {
         connectTo: "basicCntrlr"
         ,listenFor: "end"
       }
+      ,
     }
   }
-  
   ,"defaultServer": {
     definition: require('./server/definition.js')
     ,configuration: {

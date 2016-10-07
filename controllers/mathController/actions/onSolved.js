@@ -1,8 +1,8 @@
 module.exports = function(scope){
   return [
-    function(result){
-        
+    function(data)
+    {
+      
     }
-  ];
-
+  ]
 }
