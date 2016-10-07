@@ -17,6 +17,7 @@ module.exports = {
       'actions' : {
         'getHttpResponse': require('./app/actions/onRequestStart.js')
         ,'endResponse': require('./app/actions/onEndResponse.js')
+        ,'validateResult': require('./app/actions/onValidateResult.js')
       }
     }
     ,routes: {
