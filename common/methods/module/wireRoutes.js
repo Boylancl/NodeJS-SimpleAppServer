@@ -1,43 +1,38 @@
+const buildRouteActions = require('./buildRouteActions');
+const buildTransmitter = require('./buildTransmitter');
 
-module.exports = function(instances, routes, actions, instanceName)
-{
-  var instance = instances[instanceName];
+module.exports = function(instances, routes, actions, instanceName){
+  //Find the Instances in the Bag provided
+  var scope = instances[instanceName];
 
-  for(var key in routes){
+  //Run through all the defined routes
+  for(var key in actions){
+    var action = actions[key];
 
-    if(routes.hasOwnProperty(key)
-      && key in actions)
+    //Build a complete flatted list of all actions
+    var routeActions = buildRouteActions(scope, action);
+
+    //Check that route has defined actions
+    if((routes!=null || routes!=undefined)
+      && routes.hasOwnProperty(key))
     {
       var route = routes[key];
-      var action = actions[key];
 
-      //Build a complete flatted list of all actions
-      var routeActions = [];
-      if(Array.isArray(action)){
-        for(var j=0; j<action.length; j++){
-          //Set Scope for the actions; Add to the list
-          routeActions.concat(action[j](instance));
-        }
-      }
-      else{
-        routeActions = action(instance);
-      }
-
-      //Setup the instance with the correct actions
-      instance.listenOn(route.listenFor, "in", routeActions);
-
+      //Build the transmitter connecting to another instance
       if(route.connectTo != null
       && route.connectTo != undefined)
       {
         //Route to externally
-        var parent = instances[route.connectTo];
+        var reciever = instances[route.connectTo];
 
-        //Set the parent with the correct route
-        parent.listenOn(route.listenFor, "out",
-          parent.buildTransmitter(instance, route.listenFor, "in"));
+        var transmitter = buildTransmitter(scope, reciever, route.execute);
+        //Add the transmitter to the end of the actions list
+        routeActions.push(transmitter);
       }
-
     }
+
+    scope.listenOn(scope.name, key, routeActions);
+
   }
 
 }

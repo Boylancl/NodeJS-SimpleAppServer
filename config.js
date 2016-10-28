@@ -28,7 +28,6 @@ module.exports = {
         connectTo: "basicCntrlr"
         ,listenFor: "end"
       }
-      ,
     }
   }
   ,"defaultServer": {

@@ -1,15 +1,15 @@
-const opDict = {
-  'add': '+'
-  ,'subtract': '-'
-};
+const regex = "\d+|[-,+]\d+";
 
 module.exports = function(scope)
 {
   return [
     function(data){
+      console.log('OnSolve');
       var equation = data.rawEquation;
 
-      equatio
+      var eqArray = regex.exec(equation);
+
+      console.log(eqArray);
 
     }
   ];

@@ -7,14 +7,11 @@ module.exports = function(scope){
     }
     //Pass the request to the Basic Controller
     ,function(data){
-
-      var outObject = {
+      scope.out({
         signal: data.service.operation
         ,payload: data.request
         ,response: data.response
-      };
-
-      scope.out(outObject);
+      });
     }
   ];
 }

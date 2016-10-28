@@ -1,5 +1,5 @@
 module.exports = function(instance, channel, signal){
-  var channelSignals = instance.channels[channel]._events;
+  var channelSignals = instance[channel]._events;
 
   var signalFound = channelSignals[signal];
 
